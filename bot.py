@@ -26,6 +26,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             timeout=30  # clave para no colgar si tarda mucho
         )
         reply = response.json()["choices"][0]["message"]["content"]
+        response.raise_for_status() 
     except Exception as e:
         print("Error en OpenRouter:", e)
         reply = "Ups, hubo un error. Intenta de nuevo."
