@@ -12,23 +12,25 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
-    response = requests.post(
-        "https://api.openrouter.ai/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "minimax/m2.5",
-            "messages": [{"role": "user", "content": user_message}]
-        }
-    )
-    reply = response.json()["choices"][0]["message"]["content"]
+    try:
+        response = requests.post(
+            "https://api.openrouter.ai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "minimax/m2.5",
+                "messages": [{"role": "user", "content": user_message}]
+            },
+            timeout=10  # clave para no colgar si tarda mucho
+        )
+        reply = response.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        reply = "Ups, hubo un error. Intenta de nuevo."
     await update.message.reply_text(reply)
 
 app = ApplicationBuilder().token(TOKEN).build()
-
-# Aquí agregamos CommandHandler para /start
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
