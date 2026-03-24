@@ -20,7 +20,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Content-Type": "application/json"
             },
             json={
-                "model": "minimax/m2.5",
+                "model": "minimax/m2.7",
                 "messages": [{"role": "user", "content": user_message}]
             },
             timeout=10  # clave para no colgar si tarda mucho
