@@ -27,6 +27,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         reply = response.json()["choices"][0]["message"]["content"]
     except Exception as e:
+        print("Error en OpenRouter:", e)
         reply = "Ups, hubo un error. Intenta de nuevo."
     await update.message.reply_text(reply)
 
