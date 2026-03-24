@@ -23,7 +23,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "model": "minimax/m2.7",
                 "messages": [{"role": "user", "content": user_message}]
             },
-            timeout=10  # clave para no colgar si tarda mucho
+            timeout=30  # clave para no colgar si tarda mucho
         )
         reply = response.json()["choices"][0]["message"]["content"]
     except Exception as e:
